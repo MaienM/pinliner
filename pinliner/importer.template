@@ -70,7 +70,7 @@ class InlinerImporter(object):
         # entry if we fail
         exists = fullname in sys.modules
 
-        module = types.ModuleType(fullname)
+        module = types.ModuleType(str(fullname))
         module.__loader__ = self
 
         is_package = self.data[fullname][0]
@@ -109,7 +109,7 @@ def prepare_package():
     # __globals__.
     module = sys.modules.get(module_name)
     if not module:
-        module = types.ModuleType(module_name)
+        module = types.ModuleType((module_name))
         module.__package__ = ''
         module.__file__ = module_name + '.py'
         exec(inliner_importer_code, module.__dict__)
